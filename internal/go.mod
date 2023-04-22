@@ -6,7 +6,7 @@ require (
 	github.com/samber/lo v1.38.1
 	github.com/sirupsen/logrus v1.9.0
 	github.com/stretchr/testify v1.7.0
-	github.com/tsanton/tfe-client v0.2.1
+	github.com/tsanton/tfe-client v0.3.1
 	golang.org/x/crypto v0.8.0
 )
 
