@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.2](https://github.com/Tsanton/tfe-provider-release-action/compare/0.0.1...0.0.2) (2023-04-22)
+
+
+### Bug Fixes
+
+* Filename property error ([451358d](https://github.com/Tsanton/tfe-provider-release-action/commit/451358d90426187bccb0e7d4ba6cba8356471238))
+
 ## 0.0.1 (2023-04-22)
 
 
