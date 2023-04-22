@@ -27,7 +27,7 @@ func Run(cli *api.TerraformEnterpriseClient, logger u.ILogger, config *RunConfig
 	} else if providerVersion == nil {
 		providerVersion, err = createProviderVersion(ctx, cli, config)
 		if err != nil {
-			fmt.Println("Error creating provider version:", err)
+			logger.Errorf("Error creating provider version:", err)
 			return err
 		}
 	}
@@ -79,7 +79,7 @@ func Run(cli *api.TerraformEnterpriseClient, logger u.ILogger, config *RunConfig
 		if !exists {
 			tfplatform, err = createProviderPlatformVersion(ctx, cli, config, platform)
 			if err != nil {
-				fmt.Printf("Error creating provider version platform %s %s: %s", platform.Os, platform.Goarch, err)
+				logger.Errorf("Error creating provider version platform %s %s: %s", platform.Os, platform.Goarch, err)
 				return err
 			}
 		} else {
@@ -102,7 +102,7 @@ func Run(cli *api.TerraformEnterpriseClient, logger u.ILogger, config *RunConfig
 			}
 		}
 	}
-	fmt.Println("Provider version and platform created/uploaded successfully!")
+	logger.Info("Provider version and platform created/uploaded successfully!")
 	return nil
 }
 
