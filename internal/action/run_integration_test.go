@@ -33,7 +33,7 @@ func Test_live_run(t *testing.T) {
 	config := r.NewRunConfig(orgName, namespace, providerName, gresp.Data.Attributes.KeyId)
 	err := config.ParseGoreleaseArtifacts(getGoreleaserArtifactString())
 	assert.Nil(t, err)
-	err = config.ParseGoreleaserManifest(getGoreleaserMetadataString())
+	err = config.ParseGoreleaserMetadata(getGoreleaserMetadataString())
 	assert.Nil(t, err)
 
 	/* Act */

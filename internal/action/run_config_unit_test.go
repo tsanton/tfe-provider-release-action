@@ -19,13 +19,13 @@ func Test_parse_goreleaser_artifact(t *testing.T) {
 	linux, ok := lo.Find(config.ProviderVersionPlatforms, func(p m.GoreleaserArtifactArchive) bool { return p.Os == "linux" && p.Goarch == "amd64" })
 	assert.True(t, ok)
 	assert.Equal(t, "terraform-provider-tfepatch_0.1.8_linux_amd64.zip", linux.Name)
-	assert.Equal(t, "workspace/testing-assets/terraform-provider-tfepatch_0.1.8_linux_amd64.zip", linux.Path)
+	assert.Equal(t, "/workspace/testing-assets/terraform-provider-tfepatch_0.1.8_linux_amd64.zip", linux.Path)
 	assert.Equal(t, "sha256:f79a37934c2e9d793ee874eeef921213e72069480c9df3953c907d79a0f5f034", linux.ShaSum)
 
 	darwin, ok := lo.Find(config.ProviderVersionPlatforms, func(p m.GoreleaserArtifactArchive) bool { return p.Os == "darwin" && p.Goarch == "amd64" })
 	assert.True(t, ok)
 	assert.Equal(t, "terraform-provider-tfepatch_0.1.8_darwin_amd64.zip", darwin.Name)
-	assert.Equal(t, "workspace/testing-assets/terraform-provider-tfepatch_0.1.8_darwin_amd64.zip", darwin.Path)
+	assert.Equal(t, "/workspace/testing-assets/terraform-provider-tfepatch_0.1.8_darwin_amd64.zip", darwin.Path)
 	assert.Equal(t, "sha256:f2991fc425fbaa4033f10cf7962243832056762c9fbecb656db11e429ea9551e", darwin.ShaSum)
 
 	/* Checksum */
@@ -41,7 +41,7 @@ func Test_parse_goreleaser_artifact(t *testing.T) {
 
 func Test_parse_gorelease_manifest(t *testing.T) {
 	config := r.RunConfig{}
-	err := config.ParseGoreleaserManifest(getGoreleaserMetadataString())
+	err := config.ParseGoreleaserMetadata(getGoreleaserMetadataString())
 	assert.Nil(t, err)
 	assert.Equal(t, "terraform-provider-tfepatch", config.GoreleaserMetadata.ProviderName)
 	assert.Equal(t, "0.1.8", config.GoreleaserMetadata.Version)

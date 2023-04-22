@@ -6,6 +6,7 @@ import (
 	api "github.com/tsanton/tfe-client/tfe"
 	apim "github.com/tsanton/tfe-client/tfe/models"
 	a "github.com/tsanton/tfe-provider-release-action/action"
+	u "github.com/tsanton/tfe-provider-release-action/utilities"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -15,17 +16,18 @@ var (
 	token    string
 )
 
-var runConfig a.RunConfig
+var runConfig *a.RunConfig
 
 func init() {
-	//set variables with defaults
-	//providerName allow empty -> from metadata
-	//versionNumber from metadata
-
-	//get and serialize manifest input environment
-	//get and serialize artifacts input environment
-	//protocolVersion: '["5.0", "6.0"]'
-	runConfig = a.RunConfig{}
+	hostname = u.GetEnv("TFE_HOSTNAME", "")
+	token = u.GetEnv("TFE_TOKEN", "")
+	organization := u.GetEnv("TFE_ORGANIZATION", "")
+	namespace := u.GetEnv("TFE_NAMESPACE", "")
+	providerName := u.GetEnv("TFE_PROVIDER_NAME", "")
+	gpgKeyId := u.GetEnv("TFE_GPG_KEY_ID", "")
+	runConfig = a.NewRunConfig(organization, namespace, providerName, gpgKeyId)
+	_ = runConfig.ParseGoreleaseArtifacts(u.GetEnv("GORELEASE_ARTIFACTS", "{}"))
+	_ = runConfig.ParseGoreleaserMetadata(u.GetEnv("GORELEASE_METADATA", "{}"))
 }
 
 func main() {
@@ -38,8 +40,13 @@ func main() {
 	if err != nil {
 		panic("unable to configure ")
 	}
+	//TODO: calidate input
+	// logger.Info("Validating the input")
+
+	// logger.Info("Valid input")
+
 	logger.Info("Starting the release action")
-	err = a.Run(cli, logger, &runConfig)
+	err = a.Run(cli, logger, runConfig)
 	if err != nil {
 		logger.Info("Unsuccessful upload")
 		os.Exit(1)

@@ -1,0 +1,74 @@
+name: terraform-cloud-release-action
+
+description: Action to release a terraform provider version to your Terraform Cloud/Enterprise private provider registry
+inputs:
+  binary_version:
+    description: From which repository tag to download the action binary
+    type: string
+    required: true
+
+  hostname:
+    description: The URL to the Terraform cloud/enterprise api. Usually 'https://app.terraform.io'
+    type: string
+    required: false
+    default: https://app.terraform.io
+  token:
+    description: Terraform cloud/enterprise access token. The access token must be a PAT/team token from the owners team or a team with Manage Private Registry permissions
+    type: string
+    required: true
+  organization:
+    description: The name of the Terraform cloud/enterprise organization
+    type: string
+    required: true
+  namespace:
+    description: The namespace for the provider. For private providers this must equal the organization name
+    type: string
+    required: true
+  provider_name:
+    description: The name of the provider. Usually 'terraform-provider-...'
+    type: string
+    required: true
+  terraform_cloud_gpg_key_id:
+    description: The key-id of the GPG-key that was used in goreleaser to sign your provider
+    type: string
+    required: true
+
+  goreleaser_metadata:
+  	description: The 'metadata' output from goreleaser
+    type: string
+    required: true
+
+  goreleaser_artifacts:
+    description: The 'artifacts' output from goreleaser
+    type: string
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    #implement feature: https://github.com/robinraju/release-downloader/pull/613
+  - uses: robinraju/release-downloader@v1.7
+    with:
+      repository: "tsanton/terraform-cloud-release-action"
+      tag: ${{ inputs.binary_version }}
+      fileName: "terraform-cloud-provider-releaser-linux-amd64.tar.gz"
+      # Relative path under $GITHUB_WORKSPACE to place the downloaded file(s)
+      # It will create the target directory automatically if not present
+      # eg: out-file-path: "my-downloads" => It will create directory $GITHUB_WORKSPACE/my-downloads
+      out-file-path: "artifact-download"
+
+  - name: run
+    shell: bash
+    run: |
+      tar -xf ./artifact-download/terraform-cloud-provider-releaser-linux-amd64.tar.gz --directory $GITHUB_WORKSPACE/artifact-download
+      chmod +x ./artifact-download/terraform-cloud-provider-releaser
+      ./artifact-download/terraform-cloud-provider-releaser
+    env:
+      TFE_HOSTNAME: ${{ inputs.hostname}}
+      TFE_TOKEN: ${{ inputs.token}}
+      TFE_ORGANIZATION: ${{ inputs.organization}}
+      TFE_NAMESPACE: ${{ inputs.namespace}}
+      TFE_PROVIDER_NAME: ${{ inputs.provider_name}}
+      TFE_GPG_KEY_ID: ${{ inputs.terraform_cloud_gpg_key_id}}
+      GORELEASE_METADATA: ${{ inputs.goreleaser_metadata }}
+      GORELEASE_ARTIFACTS: ${{ inputs.goreleaser_artifacts }}

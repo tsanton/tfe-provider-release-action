@@ -33,7 +33,7 @@ func NewRunConfig(organization, namespace, providerName, gpgKeyId string) *RunCo
 	}
 }
 
-func (c *RunConfig) ParseGoreleaserManifest(manifest string) error {
+func (c *RunConfig) ParseGoreleaserMetadata(manifest string) error {
 	var ret m.GoreleaserMetadata
 	err := json.Unmarshal([]byte(manifest), &ret)
 	if err != nil {
