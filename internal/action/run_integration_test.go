@@ -30,7 +30,7 @@ func Test_live_run(t *testing.T) {
 		}
 	}()
 
-	config := r.NewRunConfig(orgName, namespace, providerName, gresp.Data.Attributes.KeyId)
+	config := r.NewRunConfig("/workspace/testing-assets/", orgName, namespace, providerName, gresp.Data.Attributes.KeyId)
 	err := config.ParseGoreleaseArtifacts(logger, getGoreleaserArtifactString())
 	assert.Nil(t, err)
 	err = config.ParseGoreleaserMetadata(logger, getGoreleaserMetadataString())

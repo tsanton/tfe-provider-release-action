@@ -23,11 +23,12 @@ func init() {
 	logger = log.New()
 	hostname = u.GetEnv("TFE_HOSTNAME", "")
 	token = u.GetEnv("TFE_TOKEN", "")
+	workdir := u.GetEnv("APP_WORKDIR", "")
 	organization := u.GetEnv("TFE_ORGANIZATION", "")
 	namespace := u.GetEnv("TFE_NAMESPACE", "")
 	providerName := u.GetEnv("TFE_PROVIDER_NAME", "")
 	gpgKeyId := u.GetEnv("TFE_GPG_KEY_ID", "")
-	runConfig = a.NewRunConfig(organization, namespace, providerName, gpgKeyId)
+	runConfig = a.NewRunConfig(workdir, organization, namespace, providerName, gpgKeyId)
 	_ = runConfig.ParseGoreleaseArtifacts(logger, os.Getenv("GORELEASE_ARTIFACTS"))
 	_ = runConfig.ParseGoreleaserMetadata(logger, os.Getenv("GORELEASE_METADATA"))
 }

@@ -10,6 +10,7 @@ import (
 
 type RunConfig struct {
 	/* Environment inputs */
+	Workdir      string
 	Organization string
 	Namespace    string
 	ProviderName string
@@ -24,8 +25,9 @@ type RunConfig struct {
 	ProtocolVersions         []string
 }
 
-func NewRunConfig(organization, namespace, providerName, gpgKeyId string) *RunConfig {
+func NewRunConfig(workdir, organization, namespace, providerName, gpgKeyId string) *RunConfig {
 	return &RunConfig{
+		Workdir:      workdir,
 		Organization: organization,
 		Namespace:    namespace,
 		ProviderName: providerName,
@@ -35,9 +37,10 @@ func NewRunConfig(organization, namespace, providerName, gpgKeyId string) *RunCo
 
 func (c *RunConfig) ParseGoreleaserMetadata(logger u.ILogger, manifest string) error {
 	var ret m.GoreleaserMetadata
-	logger.Infof("Trying to unmarshal the following string: %s", manifest)
+	logger.Info("Unmarshaling Goreleaser metadata")
 	err := json.Unmarshal([]byte(manifest), &ret)
 	if err != nil {
+		logger.Errorf("Error unmarshalling Goreleaser metadata: %s", err.Error())
 		return err
 	}
 	c.GoreleaserMetadata = ret
@@ -47,10 +50,11 @@ func (c *RunConfig) ParseGoreleaserMetadata(logger u.ILogger, manifest string) e
 func (c *RunConfig) ParseGoreleaseArtifacts(logger u.ILogger, artifacts string) error {
 	releases := []m.GoreleaserArtifactArchive{}
 	var checksum, signature, registryManifest m.GoreleaserArtifactFile
-	logger.Infof("Trying to unmarshal the following string: %s", artifacts)
+	logger.Info("Unmarshaling Goreleaser artifacts")
 	var maps []map[string]interface{}
 	err := json.Unmarshal([]byte(artifacts), &maps)
 	if err != nil {
+		logger.Errorf("Error unmarshalling Goreleaser artifacts: %s", err.Error())
 		return err
 	}
 

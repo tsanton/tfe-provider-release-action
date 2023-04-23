@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"path"
 	"strings"
 
 	"github.com/samber/lo"
@@ -24,7 +25,7 @@ func Run(cli *api.TerraformEnterpriseClient, logger u.ILogger, config *RunConfig
 	logger.Infof("Checking if provider version %s exists", config.GoreleaserMetadata.Version)
 	providerVersion, err := checkProviderVersionExists(ctx, cli, config) //Get -> return nil if 404
 	if err != nil {
-		logger.Info("Error checking if provider version exists")
+		logger.Error("Error checking if provider version exists")
 		return err //TODO: custom error message
 	} else if providerVersion == nil {
 		logger.Infof("Creating provider version %s", config.GoreleaserMetadata.Version)
@@ -38,9 +39,10 @@ func Run(cli *api.TerraformEnterpriseClient, logger u.ILogger, config *RunConfig
 	// 2. Upload the SHA256SUMS and SHA256SUMS.sig files if not uploaded:
 	if !providerVersion.Data.Attributes.ShasumsUploaded {
 		logger.Info("Uploading SHA256SUMS file")
-		fileContent, err := ReadFileToByteArray(config.Checksum.Path)
+		fullPath := path.Join(config.Workdir, config.Checksum.Path)
+		fileContent, err := ReadFileToByteArray(fullPath)
 		if err != nil {
-			logger.Infof("Error reading SHA256SUMS file from path: %s", config.Checksum.Path)
+			logger.Errorf("Error reading SHA256SUMS file from path: %s", fullPath)
 			return err
 		}
 		request, err := CreateRequestFromByteArray(http.MethodPost, providerVersion.Data.Links.ShasumsUploadUrl, fileContent, config.Checksum.Name)
@@ -51,15 +53,16 @@ func Run(cli *api.TerraformEnterpriseClient, logger u.ILogger, config *RunConfig
 		request.Header.Set("Accept", "application/json")
 		_, err = api.Do[interface{}](ctx, cli, 200, request)
 		if err != nil {
-			logger.Info("Error Uploading SHA256SUMS file")
+			logger.Errorf("Error Uploading SHA256SUMS file")
 			return err
 		}
 	}
 	if !providerVersion.Data.Attributes.ShasumsSigUploaded {
 		logger.Info("Uploading SHA256SUMS signature file")
-		fileContent, err := ReadFileToByteArray(config.Signature.Path)
+		fullPath := path.Join(config.Workdir, config.Signature.Path)
+		fileContent, err := ReadFileToByteArray(fullPath)
 		if err != nil {
-			logger.Infof("Error reading SHA256SUMS signature file from path: %s", config.Signature.Path)
+			logger.Errorf("Error reading SHA256SUMS signature file from path: %s", fullPath)
 			return err
 		}
 		request, err := CreateRequestFromByteArray(http.MethodPost, providerVersion.Data.Links.ShasumsSigUploadUrl, fileContent, config.Signature.Name)
@@ -70,7 +73,7 @@ func Run(cli *api.TerraformEnterpriseClient, logger u.ILogger, config *RunConfig
 		request.Header.Set("Accept", "application/json")
 		_, err = api.Do[interface{}](ctx, cli, 200, request)
 		if err != nil {
-			logger.Info("Error Uploading SHA256SUMS signature file")
+			logger.Errorf("Error Uploading SHA256SUMS signature file")
 			return err
 		}
 	}
@@ -103,9 +106,10 @@ func Run(cli *api.TerraformEnterpriseClient, logger u.ILogger, config *RunConfig
 		// - when provider-binary-uploaded: false, instead of including a link to provider-binary-download, the response will include an upload link provider-binary-upload
 		if !tfplatform.Attributes.ProviderBinaryUploaded {
 			logger.Infof("Uploading provider platform binary: %s %s", platform.Os, platform.Goarch)
-			fileContent, err := ReadFileToByteArray(platform.Path)
+			fullPath := path.Join(config.Workdir, platform.Path)
+			fileContent, err := ReadFileToByteArray(fullPath)
 			if err != nil {
-				logger.Infof("Error reading provider platform binary at path: %s", platform.Path)
+				logger.Errorf("Error reading provider platform binary at path: %s", fullPath)
 				return err
 			}
 			request, err := CreateRequestFromByteArray(http.MethodPost, tfplatform.Links.ProviderBinaryUpload, fileContent, platform.Name)
@@ -114,7 +118,7 @@ func Run(cli *api.TerraformEnterpriseClient, logger u.ILogger, config *RunConfig
 			}
 			_, err = api.Do[interface{}](ctx, cli, 200, request)
 			if err != nil {
-				logger.Info("Error Uploading provider platform binary")
+				logger.Errorf("Error Uploading provider platform binary")
 				return err
 			}
 			logger.Info("Successfully uploaded provider platform binary")

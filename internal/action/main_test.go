@@ -184,7 +184,7 @@ func getGoreleaserArtifactString() string {
 		},
 		{
 		   "name":"terraform-provider-tfepatch_0.1.8_linux_amd64.zip",
-		   "path":"/workspace/testing-assets/terraform-provider-tfepatch_0.1.8_linux_amd64.zip",
+		   "path":"dist/terraform-provider-tfepatch_0.1.8_linux_amd64.zip",
 		   "goos":"linux",
 		   "goarch":"amd64",
 		   "goamd64":"v1",
@@ -219,7 +219,7 @@ func getGoreleaserArtifactString() string {
 		},
 		{
 		   "name":"terraform-provider-tfepatch_0.1.8_darwin_amd64.zip",
-		   "path":"/workspace/testing-assets/terraform-provider-tfepatch_0.1.8_darwin_amd64.zip",
+		   "path":"dist/terraform-provider-tfepatch_0.1.8_darwin_amd64.zip",
 		   "goos":"darwin",
 		   "goarch":"amd64",
 		   "goamd64":"v1",
@@ -254,14 +254,14 @@ func getGoreleaserArtifactString() string {
 		},
 		{
 		   "name":"terraform-provider-tfepatch_0.1.8_SHA256SUMS",
-		   "path":"/workspace/testing-assets/terraform-provider-tfepatch_0.1.8_SHA256SUMS",
+		   "path":"dist/terraform-provider-tfepatch_0.1.8_SHA256SUMS",
 		   "internal_type":12,
 		   "type":"Checksum",
 		   "extra":{}
 		},
 		{
 		   "name":"terraform-provider-tfepatch_0.1.8_SHA256SUMS.sig",
-		   "path":"/workspace/testing-assets/terraform-provider-tfepatch_0.1.8_SHA256SUMS.sig",
+		   "path":"dist/terraform-provider-tfepatch_0.1.8_SHA256SUMS.sig",
 		   "internal_type":13,
 		   "type":"Signature",
 		   "extra":{
@@ -270,7 +270,7 @@ func getGoreleaserArtifactString() string {
 		},
 		{
 		   "name":"terraform-provider-tfepatch_0.1.8_manifest.json",
-		   "path":"/workspace/testing-assets/terraform-registry-manifest.json",
+		   "path":"terraform-registry-manifest.json",
 		   "internal_type":3,
 		   "type":"File"
 		}

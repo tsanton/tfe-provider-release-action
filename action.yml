@@ -7,10 +7,16 @@ inputs:
     type: string
     required: true
 
+
+  workdir:
+    description: The same workdir as goreleaser. Defaults to "./"
+    type: string
+    required: true
+    default: ./
   hostname:
     description: The URL to the Terraform cloud/enterprise api. Usually 'https://app.terraform.io'
     type: string
-    required: false
+    required: true
     default: https://app.terraform.io
   token:
     description: Terraform cloud/enterprise access token. The access token must be a PAT/team token from the owners team or a team with Manage Private Registry permissions
@@ -64,6 +70,7 @@ runs:
       chmod +x ./artifact-download/terraform-cloud-provider-releaser
       ./artifact-download/terraform-cloud-provider-releaser
     env:
+      APP_WORKDIR: ${{ inputs.workdir}}
       TFE_HOSTNAME: ${{ inputs.hostname}}
       TFE_TOKEN: ${{ inputs.token}}
       TFE_ORGANIZATION: ${{ inputs.organization}}
