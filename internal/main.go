@@ -28,8 +28,8 @@ func init() {
 	providerName := u.GetEnv("TFE_PROVIDER_NAME", "")
 	gpgKeyId := u.GetEnv("TFE_GPG_KEY_ID", "")
 	runConfig = a.NewRunConfig(organization, namespace, providerName, gpgKeyId)
-	_ = runConfig.ParseGoreleaseArtifacts(logger, u.GetEnv("GORELEASE_ARTIFACTS", "{}"))
-	_ = runConfig.ParseGoreleaserMetadata(logger, u.GetEnv("GORELEASE_METADATA", "{}"))
+	_ = runConfig.ParseGoreleaseArtifacts(logger, os.Getenv("GORELEASE_ARTIFACTS"))
+	_ = runConfig.ParseGoreleaserMetadata(logger, os.Getenv("GORELEASE_METADATA"))
 }
 
 func main() {

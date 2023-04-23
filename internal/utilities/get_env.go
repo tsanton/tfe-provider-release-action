@@ -7,6 +7,7 @@ import (
 	"os"
 )
 
+// TODO: GetEnv with nested json string
 func GetEnv[T any](key string, fallback T) T {
 	value := os.Getenv(key)
 	if len(value) == 0 {
