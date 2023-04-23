@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.4](https://github.com/Tsanton/tfe-provider-release-action/compare/0.0.3...0.0.4) (2023-04-23)
+
+
+### Bug Fixes
+
+* wrong repository reference in action ([bdbf043](https://github.com/Tsanton/tfe-provider-release-action/commit/bdbf0435b18092c99b9c0a61cf65276f218a6fc0))
+
 ## [0.0.3](https://github.com/Tsanton/tfe-provider-release-action/compare/0.0.2...0.0.3) (2023-04-23)
 
 
