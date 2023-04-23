@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.7](https://github.com/Tsanton/tfe-provider-release-action/compare/0.0.6...0.0.7) (2023-04-23)
+
+
+### Features
+
+* added logging ([0ce52f6](https://github.com/Tsanton/tfe-provider-release-action/commit/0ce52f69bd8b75bf879512b51602651cfbb8fcaf))
+
 ## [0.0.6](https://github.com/Tsanton/tfe-provider-release-action/compare/0.0.5...0.0.6) (2023-04-23)
 
 
