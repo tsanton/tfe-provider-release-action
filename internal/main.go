@@ -12,6 +12,7 @@ import (
 )
 
 var (
+	logger   u.ILogger
 	hostname string
 	token    string
 )
@@ -19,6 +20,7 @@ var (
 var runConfig *a.RunConfig
 
 func init() {
+	logger = log.New()
 	hostname = u.GetEnv("TFE_HOSTNAME", "")
 	token = u.GetEnv("TFE_TOKEN", "")
 	organization := u.GetEnv("TFE_ORGANIZATION", "")
@@ -26,13 +28,12 @@ func init() {
 	providerName := u.GetEnv("TFE_PROVIDER_NAME", "")
 	gpgKeyId := u.GetEnv("TFE_GPG_KEY_ID", "")
 	runConfig = a.NewRunConfig(organization, namespace, providerName, gpgKeyId)
-	_ = runConfig.ParseGoreleaseArtifacts(u.GetEnv("GORELEASE_ARTIFACTS", "{}"))
-	_ = runConfig.ParseGoreleaserMetadata(u.GetEnv("GORELEASE_METADATA", "{}"))
+	_ = runConfig.ParseGoreleaseArtifacts(logger, u.GetEnv("GORELEASE_ARTIFACTS", "{}"))
+	_ = runConfig.ParseGoreleaserMetadata(logger, u.GetEnv("GORELEASE_METADATA", "{}"))
 }
 
 func main() {
 	//configure client
-	logger := log.New()
 	cli, err := api.NewClient(logger, &apim.ClientConfig{
 		Address: hostname,
 		Token:   token,

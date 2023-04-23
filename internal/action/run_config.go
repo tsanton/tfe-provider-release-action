@@ -33,8 +33,9 @@ func NewRunConfig(organization, namespace, providerName, gpgKeyId string) *RunCo
 	}
 }
 
-func (c *RunConfig) ParseGoreleaserMetadata(manifest string) error {
+func (c *RunConfig) ParseGoreleaserMetadata(logger u.ILogger, manifest string) error {
 	var ret m.GoreleaserMetadata
+	logger.Infof("Trying to unmarshal the following string: %s", manifest)
 	err := json.Unmarshal([]byte(manifest), &ret)
 	if err != nil {
 		return err
@@ -43,10 +44,10 @@ func (c *RunConfig) ParseGoreleaserMetadata(manifest string) error {
 	return nil
 }
 
-func (c *RunConfig) ParseGoreleaseArtifacts(artifacts string) error {
+func (c *RunConfig) ParseGoreleaseArtifacts(logger u.ILogger, artifacts string) error {
 	releases := []m.GoreleaserArtifactArchive{}
 	var checksum, signature, registryManifest m.GoreleaserArtifactFile
-
+	logger.Infof("Trying to unmarshal the following string: %s", artifacts)
 	var maps []map[string]interface{}
 	err := json.Unmarshal([]byte(artifacts), &maps)
 	if err != nil {

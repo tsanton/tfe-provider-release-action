@@ -11,7 +11,7 @@ import (
 
 func Test_parse_goreleaser_artifact(t *testing.T) {
 	config := r.RunConfig{}
-	err := config.ParseGoreleaseArtifacts(getGoreleaserArtifactString())
+	err := config.ParseGoreleaseArtifacts(logger, getGoreleaserArtifactString())
 	assert.Nil(t, err)
 	/* ProviderVersionPlatforms */
 	assert.Equal(t, 2, len(config.ProviderVersionPlatforms))
@@ -41,7 +41,7 @@ func Test_parse_goreleaser_artifact(t *testing.T) {
 
 func Test_parse_gorelease_manifest(t *testing.T) {
 	config := r.RunConfig{}
-	err := config.ParseGoreleaserMetadata(getGoreleaserMetadataString())
+	err := config.ParseGoreleaserMetadata(logger, getGoreleaserMetadataString())
 	assert.Nil(t, err)
 	assert.Equal(t, "terraform-provider-tfepatch", config.GoreleaserMetadata.ProviderName)
 	assert.Equal(t, "0.1.8", config.GoreleaserMetadata.Version)
