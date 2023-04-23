@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.6](https://github.com/Tsanton/tfe-provider-release-action/compare/0.0.5...0.0.6) (2023-04-23)
+
+
+### Bug Fixes
+
+* u.GetEnv issues with nested json ([a2e286a](https://github.com/Tsanton/tfe-provider-release-action/commit/a2e286a997a03248aeb154a8635bf8ff86636bff))
+
 ## [0.0.5](https://github.com/Tsanton/tfe-provider-release-action/compare/0.0.4...0.0.5) (2023-04-23)
 
 
