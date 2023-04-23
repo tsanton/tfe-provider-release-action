@@ -49,7 +49,7 @@ runs:
     #implement feature: https://github.com/robinraju/release-downloader/pull/613
   - uses: robinraju/release-downloader@v1.7
     with:
-      repository: "tsanton/terraform-cloud-release-action"
+      repository: "tsanton/tfe-provider-release-action"
       tag: ${{ inputs.binary_version }}
       fileName: "terraform-cloud-provider-releaser-linux-amd64.tar.gz"
       # Relative path under $GITHUB_WORKSPACE to place the downloaded file(s)
