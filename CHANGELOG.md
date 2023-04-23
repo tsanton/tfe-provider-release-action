@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.5](https://github.com/Tsanton/tfe-provider-release-action/compare/0.0.4...0.0.5) (2023-04-23)
+
+
+### Features
+
+* added unmarshalling logging ([b072f29](https://github.com/Tsanton/tfe-provider-release-action/commit/b072f29fe73c4b52d9125cbe32a0adaecb8a0dc8))
+
 ## [0.0.4](https://github.com/Tsanton/tfe-provider-release-action/compare/0.0.3...0.0.4) (2023-04-23)
 
 
