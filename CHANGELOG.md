@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.0](https://github.com/Tsanton/tfe-provider-release-action/compare/0.0.7...0.1.0) (2023-04-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* added configurable workdir
+
+### Features
+
+* added configurable workdir ([604ff84](https://github.com/Tsanton/tfe-provider-release-action/commit/604ff841801cc9074e6d99be6313856ed28a454c))
+
 ## [0.0.7](https://github.com/Tsanton/tfe-provider-release-action/compare/0.0.6...0.0.7) (2023-04-23)
 
 
