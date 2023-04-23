@@ -34,7 +34,7 @@ inputs:
     required: true
 
   goreleaser_metadata:
-  	description: The 'metadata' output from goreleaser
+    description: The 'metadata' output from goreleaser
     type: string
     required: true
 
