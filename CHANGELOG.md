@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/Tsanton/tfe-provider-release-action/compare/0.1.0...0.1.1) (2023-04-24)
+
+
+### Bug Fixes
+
+* remove "sha265" from shasum ([8677f93](https://github.com/Tsanton/tfe-provider-release-action/commit/8677f939897048ec64884c750f3f51a415e42be1))
+
 ## [0.1.0](https://github.com/Tsanton/tfe-provider-release-action/compare/0.0.7...0.1.0) (2023-04-23)
 
 
