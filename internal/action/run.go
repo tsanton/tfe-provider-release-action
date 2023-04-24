@@ -173,7 +173,7 @@ func createProviderPlatformVersion(ctx context.Context, cli *api.TerraformEnterp
 				Os:       platform.Os,
 				Arch:     platform.Goarch,
 				Filename: platform.Name,
-				Shasum:   platform.ShaSum,
+				Shasum:   strings.Split(platform.ShaSum, "sha256:")[1],
 			},
 		},
 	}
