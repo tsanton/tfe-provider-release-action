@@ -17,18 +17,18 @@ These outputs from goreleaser informs this action about the required metadata fo
 
 ## **Limitations**
 
-You can configure the build of multiple packages in goreleaser
-
-This project does not support the release of multiple builds as it grabs the first checksum and signature objects in the `artifact` output from the goreleaser action and upload that to your [provider version](https://developer.hashicorp.com/terraform/cloud-docs/registry/publish-providers#create-a-version-and-platform)
-If you try, it might work, but for two releases you'll end up with all artifacts for one release having the wrong checksums submitted
+You can configure the build of multiple packages in goreleaser which this project has not been designed to support. \
+The reason this might break is because this release action select the first occurrence of a `checksum` and `signature` objects in the `artifact` output from the goreleaser action. \
+These files are then upload that to your [provider version](https://developer.hashicorp.com/terraform/cloud-docs/registry/publish-providers#create-a-version-and-platform). \
+When you then proceed to upload your provider platform version the checksums will (probably) not be included in the `checksum` file and you might end up with signature mismatches. \
 
 ## **Usage**
 
-As mentioned above, this action depends on you having created a provider platform and uploaded a GPG key.
-As of the time of writing, it's not possible to do any of this in Terraform Cloud. Therefor I've created a demo project to release your first private provider.
-Ironically it's a terraform provider to patch terraform cloud, i.e. create and manage the resources required by this actions.
+As mentioned above, this action depends on you having created a provider platform and uploaded a GPG key. \
+At the time of writing it's not possible to do any of this in Terraform Cloud, therefore I've created a step through guide to release your first private provider. \
+Ironically it's a terraform provider to patch terraform cloud, i.e. create and manage the resources required by this actions. \
 
-All you have to do is to follow the steps in [this repository]()!
+All you have to do is to follow the steps in [this repository](https://github.com/Tsanton/terraform-provider-tfepatch)!
 
 ## **Sauce**
 
